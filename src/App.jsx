@@ -1,80 +1,42 @@
-// import './App.css'
-// import Navbar from './components/Navbar';
-// // import Heading from './Components/Heading';
-// // import Student from './components/student';
-// import Sidebar from './Components/Sidebar/Sidebar'
-// import Footer from './components/Footer/Footer'
-// // import Dashboard from './components/Dashboard/Dashboard';
-// import { useState } from 'react';
-// // import Register from './components/pages/Registration/Register';
-// import Login from './components/pages/Login/Login';
-
-// //App.jsx: The Root Component
-// //Initially everything is displayed from here
-// //Creating a root component
-// //js --HTML --JSX
-// //jsx --browser
-// //babel --help to convert to js
-// //NavBar Component
-// // const Navbar = function(){
-// //   return(
-// //     <h1>Placement Management System</h1>
-// //   )
-// // };
-// //My second Component
-// //use destructuring
-// // const Heading = function({name ,year}){
-// //   const name = "Mastan";
-// //   return(
-// //     //Can i write js in html
-// //     <div>
-// //       <h2>Welocome {name}</h2>
-      
-// //     </div>
-// //   )
-// // };
-// function App(){
-//   // const [count, setCount] = useState(250)
-//   // function addStudent(){
-//   //   setCount(count+1)
-//   //   console.log(count)
-//   // }
-//   return(
-//      <>
-//      {/* <h1>{count}</h1>
-//      <button onClick={addStudent}>Add student</button> */}
-    
-//       <Navbar />
-//        {/* <Heading /> */}
-//          {/* <Student 
-//          name = "Mastan"
-//         rollno = {"23ht1a05e9"}
-//         branch = "CSE"
-//          year = {"4thyear"} /> */}
-
-//          <Sidebar />
-//          {/* <Dashboard /> */}
-//          <Login />
-//          {/* <Register /> */}
-//          <Footer />
-
-
-//        </>
-    
-//   )
-
-// }
-
-
-// export default App;
 import "./App.css";
+import { Routes, Route, Navigate } from "react-router-dom";
+
 import Login from "./components/pages/Login/Login";
+import Register from "./components/pages/Registration/Register";
+import Layout from "./components/Layouts/Layout";
+import Home from "./components/pages/Home";
+import Dashboard from "./components/Dashboard/Dashboard";
+import Students from "./components/pages/Student/Students";
+import StudentTable from "./components/StudentTable/StudentTable";
+import NotFound from "./components/pages/Notfound/NotFound";
+import Company from "./components/pages/Companies/Company";
+
 
 function App() {
   return (
-    <div className="App">
-      <Login />
-    </div>
+    <Routes>
+      {/* Default Route */}
+      <Route path="/" element={<Navigate to="/Login" />} />
+
+      {/* Login & Register */}
+      <Route path="/Login" element={<Login />} />
+      <Route path="/Register" element={<Register />} />
+
+      {/* Layout Routes */}
+      <Route element={<Layout />}>
+        <Route path="/Home" element={<Home />} />
+        <Route path="/Dashboard" element={<Dashboard />} />
+        <Route path="/Students" element={<Students />} />
+      </Route>
+
+      {/* Student Table */}
+      <Route path="/StudentTable" element={<StudentTable students={[]} />} />
+      <Route path="/Companies" element={<Company/>}/>
+      {/* Wildcard Route */}
+
+      {/* Page Not Found */}
+      <Route path="*" element={< NotFound/>} />
+    </Routes>
   );
 }
 
