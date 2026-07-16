@@ -1,18 +1,14 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
- const div = <div>
-<h1>Welcome To Chalapathi</h1>
-<p>Learn Today ,Lead Tomorrow</p>
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
 
-</div>
+import "./index.css";
+import App from "./App";
 
-createRoot(document.getElementById('root')).render(
-
-  //safety to components
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />//app.jsx
-  </StrictMode> 
-)
-
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </StrictMode>
+);

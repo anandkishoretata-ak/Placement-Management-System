@@ -1,175 +1,229 @@
 import "./Register.css";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
-  const initialData = {
-    name: "",
-    rollNo: "",
-    email: "",
-    password: "",
-    branch: "",
-    year: "",
-    gender: "",
-    cgpa: "",
-    skills: "",
-  };
+  const navigate = useNavigate();
 
-  const [formData, setFormData] = useState(initialData);
+  const [studentName, setStudentName] = useState("");
+  const [rollNo, setRollNo] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [branch, setBranch] = useState("");
+  const [cgpa, setCgpa] = useState("");
+  const [year, setYear] = useState("");
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const [errors, setErrors] = useState({});
 
-  const registerStudent = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    for (let key in formData) {
-      if (formData[key] === "") {
-        alert("Please fill all fields");
-        return;
-      }
+    let validationErrors = {};
+
+    // Student Name
+    if (!studentName.trim()) {
+      validationErrors.studentName = "Student Name is required";
     }
 
-    if (formData.cgpa < 0 || formData.cgpa > 10) {
-      alert("CGPA must be between 0 and 10");
-      return;
+    // Roll Number
+    if (!rollNo.trim()) {
+      validationErrors.rollNo = "Roll Number is required";
     }
 
-    alert(
-      `Registration Successful!
+    // Email
+    if (!email.trim()) {
+      validationErrors.email = "Email is required";
+    } else if (
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/.test(email)
+    ) {
+      validationErrors.email = "Invalid Email";
+    }
 
-Name : ${formData.name}
-Roll No : ${formData.rollNo}
-Email : ${formData.email}
-Branch : ${formData.branch}
-Year : ${formData.year}
-Gender : ${formData.gender}
-CGPA : ${formData.cgpa}
-Skills : ${formData.skills}`
+    // Password
+    if (!password.trim()) {
+      validationErrors.password = "Password is required";
+    } else if (
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(password)
+    ) {
+      validationErrors.password =
+        "Password must contain uppercase, lowercase, number & special character.";
+    }
+
+    // Branch
+    if (!branch.trim()) {
+      validationErrors.branch = "Branch is required";
+    }
+
+    // CGPA
+    if (!cgpa) {
+      validationErrors.cgpa = "CGPA is required";
+    } else if (cgpa < 0 || cgpa > 10) {
+      validationErrors.cgpa = "CGPA should be between 0 and 10";
+    }
+
+    // Year
+    if (!year) {
+      validationErrors.year = "Select Year";
+    }
+
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) return;
+
+    // Student Object
+    const student = {
+      id: Date.now(),
+      studentName,
+      rollNo,
+      email,
+      password,
+      branch,
+      cgpa,
+      year,
+    };
+
+    // Get Existing Students
+    const existingStudents =
+      JSON.parse(localStorage.getItem("students")) || [];
+
+    // Add New Student
+    existingStudents.push(student);
+
+    // Save Back to LocalStorage
+    localStorage.setItem(
+      "students",
+      JSON.stringify(existingStudents)
     );
 
-    setFormData(initialData);
+    alert("Registration Successful!");
+
+    // Clear Form
+    setStudentName("");
+    setRollNo("");
+    setEmail("");
+    setPassword("");
+    setBranch("");
+    setCgpa("");
+    setYear("");
+    setErrors({});
+
+    // Navigate to Students Page
+    navigate("/Students");
+  };
+
+  const handleReset = () => {
+    setStudentName("");
+    setRollNo("");
+    setEmail("");
+    setPassword("");
+    setBranch("");
+    setCgpa("");
+    setYear("");
+    setErrors({});
   };
 
   return (
-    <div className="register-page">
-      <div className="left-box">
-        <h1>Student Registration</h1>
+    <div className="register">
 
-        <form onSubmit={registerStudent}>
+      <h1>Student Registration</h1>
 
-          <input
-            type="text"
-            name="name"
-            placeholder="Student Name"
-            value={formData.name}
-            onChange={handleChange}
-          />
+      <form onSubmit={handleSubmit}>
 
-          <input
-            type="text"
-            name="rollNo"
-            placeholder="Roll Number"
-            value={formData.rollNo}
-            onChange={handleChange}
-          />
+        <input
+          type="text"
+          placeholder="Student Name"
+          value={studentName}
+          onChange={(e) => setStudentName(e.target.value)}
+        />
+        {errors.studentName && (
+          <p className="error">{errors.studentName}</p>
+        )}
 
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-          />
+        <input
+          type="text"
+          placeholder="Roll Number"
+          value={rollNo}
+          onChange={(e) => setRollNo(e.target.value)}
+        />
+        {errors.rollNo && (
+          <p className="error">{errors.rollNo}</p>
+        )}
 
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-          />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        {errors.email && (
+          <p className="error">{errors.email}</p>
+        )}
 
-          <select
-            name="branch"
-            value={formData.branch}
-            onChange={handleChange}
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        {errors.password && (
+          <p className="error">{errors.password}</p>
+        )}
+
+        <input
+          type="text"
+          placeholder="Branch"
+          value={branch}
+          onChange={(e) => setBranch(e.target.value)}
+        />
+        {errors.branch && (
+          <p className="error">{errors.branch}</p>
+        )}
+
+        <input
+          type="number"
+          placeholder="CGPA"
+          value={cgpa}
+          onChange={(e) => setCgpa(e.target.value)}
+          min="0"
+          max="10"
+          step="0.01"
+        />
+        {errors.cgpa && (
+          <p className="error">{errors.cgpa}</p>
+        )}
+
+        <select
+          value={year}
+          onChange={(e) => setYear(e.target.value)}
+        >
+          <option value="">Select Year</option>
+          <option>1st Year</option>
+          <option>2nd Year</option>
+          <option>3rd Year</option>
+          <option>4th Year</option>
+        </select>
+        {errors.year && (
+          <p className="error">{errors.year}</p>
+        )}
+
+        <div className="buttons">
+          <button type="submit">Register</button>
+
+          <button
+            type="button"
+            onClick={handleReset}
           >
-            <option value="">Select Branch</option>
-            <option>CSE</option>
-            <option>ECE</option>
-            <option>EEE</option>
-            <option>AIML</option>
-            <option>IT</option>
-          </select>
+            Reset
+          </button>
+        </div>
 
-          <select
-            name="year"
-            value={formData.year}
-            onChange={handleChange}
-          >
-            <option value="">Select Year</option>
-            <option>1st Year</option>
-            <option>2nd Year</option>
-            <option>3rd Year</option>
-            <option>4th Year</option>
-          </select>
+      </form>
 
-          <input
-            type="number"
-            name="cgpa"
-            placeholder="CGPA"
-            value={formData.cgpa}
-            onChange={handleChange}
-          />
+      <p>
+        Already have an account?{" "}
+        <Link to="/Login">Login Here</Link>
+      </p>
 
-          <div className="gender-group">
-            <label>
-              <input
-                type="radio"
-                name="gender"
-                value="Male"
-                checked={formData.gender === "Male"}
-                onChange={handleChange}
-              />
-              Male
-            </label>
-
-            <label>
-              <input
-                type="radio"
-                name="gender"
-                value="Female"
-                checked={formData.gender === "Female"}
-                onChange={handleChange}
-              />
-              Female
-            </label>
-          </div>
-
-          <textarea
-            name="skills"
-            placeholder="Enter Skills"
-            value={formData.skills}
-            onChange={handleChange}
-          />
-
-          <div className="btns">
-            <button type="submit">Register</button>
-
-            <button
-              type="button"
-              onClick={() => setFormData(initialData)}
-            >
-              Clear
-            </button>
-          </div>
-
-        </form>
-      </div>
     </div>
   );
 }

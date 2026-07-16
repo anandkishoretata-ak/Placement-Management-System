@@ -1,4 +1,5 @@
 import "./Sidebar.css";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   FaHome,
   FaUserGraduate,
@@ -10,6 +11,12 @@ import {
 } from "react-icons/fa";
 
 function Sidebar() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate("/Login");
+  };
+
   return (
     <aside className="sidebar">
       <div className="logo">
@@ -19,36 +26,48 @@ function Sidebar() {
 
       <ul className="menu">
         <li>
-          <FaHome className="icon" />
-          <span>Dashboard</span>
+          <NavLink to="/Dashboard">
+            <FaHome className="icon" />
+            <span>Dashboard</span>
+          </NavLink>
         </li>
 
         <li>
-          <FaUserGraduate className="icon" />
-          <span>Students</span>
+          <NavLink to="/Students">
+            <FaUserGraduate className="icon" />
+            <span>Students</span>
+          </NavLink>
         </li>
 
         <li>
-          <FaBuilding className="icon" />
-          <span>Companies</span>
+          <NavLink to="/Companies">
+            <FaBuilding className="icon" />
+            <span>Companies</span>
+          </NavLink>
         </li>
 
         <li>
-          <FaBriefcase className="icon" />
-          <span>Placements</span>
+          <NavLink to="/Placements">
+            <FaBriefcase className="icon" />
+            <span>Placements</span>
+          </NavLink>
         </li>
 
         <li>
-          <FaChartBar className="icon" />
-          <span>Reports</span>
+          <NavLink to="/Reports">
+            <FaChartBar className="icon" />
+            <span>Reports</span>
+          </NavLink>
         </li>
 
         <li>
-          <FaCog className="icon" />
-          <span>Settings</span>
+          <NavLink to="/Settings">
+            <FaCog className="icon" />
+            <span>Settings</span>
+          </NavLink>
         </li>
 
-        <li className="logout">
+        <li className="logout" onClick={handleLogout}>
           <FaSignOutAlt className="icon" />
           <span>Logout</span>
         </li>
