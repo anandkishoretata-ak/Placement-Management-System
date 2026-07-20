@@ -1,0 +1,88 @@
+.edit-container{
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+min-height:90vh;
+
+background:#f5f7fb;
+
+}
+
+.edit-card{
+
+width:700px;
+
+background:white;
+
+padding:35px;
+
+border-radius:15px;
+
+box-shadow:0 5px 20px rgba(0,0,0,.15);
+
+}
+
+.edit-card h1{
+
+text-align:center;
+
+color:#910f79;
+
+margin-bottom:25px;
+
+}
+
+.edit-card form{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:18px;
+
+}
+
+.edit-card input,
+.edit-card select{
+
+padding:12px;
+
+border:1px solid #ccc;
+
+border-radius:8px;
+
+font-size:15px;
+
+}
+
+.edit-card button{
+
+grid-column:span 2;
+
+padding:14px;
+
+background:#d618e0;
+
+color:white;
+
+border:none;
+
+border-radius:8px;
+
+font-size:17px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.edit-card button:hover{
+
+background:#d51dd8;
+
+}

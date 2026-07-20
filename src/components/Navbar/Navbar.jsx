@@ -1,40 +1,57 @@
 import "./Navbar.css";
 import {
-  FaBell,
-  FaSearch,
-  FaUserCircle,
+FaSearch,
+FaBell,
+FaUserCircle
 } from "react-icons/fa";
 
-function Navbar() {
-  return (
-    <nav className="navbar">
-      {/* Left */}
-      <div className="nav-left">
-        <h1>Placement Management System</h1>
-      </div>
+function Navbar(){
 
-      {/* Center */}
-      <div className="nav-center">
-        <div className="search-box">
-          <FaSearch className="search-icon" />
-          <input
-            type="text"
-            placeholder="Search students..."
-          />
-        </div>
-      </div>
+return(
 
-      {/* Right */}
-      <div className="nav-right">
-        <FaBell className="nav-icon" />
+<nav className="navbar">
 
-        <div className="profile">
-          <FaUserCircle className="profile-icon" />
-          <span>Welcome, Student</span>
-        </div>
-      </div>
-    </nav>
-  );
+<div className="logo">
+
+Placement Management System
+
+</div>
+
+<div className="search-box">
+
+<FaSearch/>
+
+<input
+type="text"
+placeholder="Search..."
+/>
+
+</div>
+
+<div className="navbar-right">
+
+<FaBell className="nav-icon"/>
+
+<div className="profile">
+
+<FaUserCircle className="profile-icon"/>
+
+<div>
+
+<h4>Admin</h4>
+
+<p>Placement Officer</p>
+
+</div>
+
+</div>
+
+</div>
+
+</nav>
+
+)
+
 }
 
 export default Navbar;

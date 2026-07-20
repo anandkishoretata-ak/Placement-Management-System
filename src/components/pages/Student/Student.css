@@ -1,94 +1,117 @@
-.students-container {
-  padding: 30px;
-  background: #f5f7fb;
-  min-height: 100vh;
+.students-page{
+
+    width:100%;
+
 }
 
-.students-container h1 {
-  color: #1e3a8a;
-  margin-bottom: 10px;
-  font-size: 32px;
+.students-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
 }
 
-.students-container p {
-  color: #555;
-  margin-bottom: 25px;
-  font-size: 16px;
+.students-header h1{
+
+    color:#ce1bc5;
+
+    font-size:32px;
+
 }
 
-.add-btn {
-  background: #2563eb;
-  color: white;
-  border: none;
-  padding: 12px 22px;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-bottom: 25px;
-  transition: 0.3s;
+.students-header p{
+
+    color:#666;
+
+    margin-top:5px;
+
 }
 
-.add-btn:hover {
-  background: #1d4ed8;
+.add-btn{
+
+    background:#ba0fc0;
+
+    color:white;
+
+    border:none;
+
+    padding:14px 25px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    transition:.3s;
+
 }
 
-.loading {
-  text-align: center;
-  font-size: 24px;
-  color: #2563eb;
-  margin-top: 80px;
+.add-btn:hover{
+
+    background:#ab17b8;
+
 }
 
-.students-container table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+.search-container{
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+
+    margin-bottom:25px;
+
 }
 
-.students-container table th {
-  background: #2563eb;
-  color: white;
-  padding: 15px;
-  text-align: center;
+.search-container input{
+
+    width:100%;
+
+    padding:14px;
+
+    border:1px solid #ddd;
+
+    border-radius:8px;
+
+    font-size:16px;
+
 }
 
-.students-container table td {
-  padding: 12px;
-  text-align: center;
-  border-bottom: 1px solid #ddd;
+.search-container input:focus{
+
+    outline:none;
+
+    border:1px solid #ca18c7;
+
 }
 
-.students-container table tr:nth-child(even) {
-  background: #f9f9f9;
+@media(max-width:768px){
+
+.students-header{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:20px;
+
 }
 
-.students-container table tr:hover {
-  background: #eef4ff;
+.add-btn{
+
+width:100%;
+
 }
 
-.students-container a {
-  text-decoration: none;
-}
-
-@media (max-width: 768px) {
-  .students-container {
-    padding: 15px;
-  }
-
-  .students-container h1 {
-    font-size: 24px;
-  }
-
-  .students-container table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-
-  .add-btn {
-    width: 100%;
-  }
 }

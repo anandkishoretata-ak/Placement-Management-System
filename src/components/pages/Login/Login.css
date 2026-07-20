@@ -1,120 +1,119 @@
-/* Login Page */
-.login {
-  width: 380px;
-  margin: 80px auto;
-  padding: 30px;
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-  text-align: center;
+.login-page{
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+min-height:100vh;
+
+background:linear-gradient(135deg,#770f91,#d725eb);
+
 }
 
-/* Heading */
-.login h1 {
-  color: #0d47a1;
-  margin-bottom: 25px;
-  font-size: 28px;
+.login-card{
+
+width:430px;
+
+background:white;
+
+padding:40px;
+
+border-radius:20px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.25);
+
+text-align:center;
+
 }
 
-/* Input Fields */
-.login input {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border: 1px solid #bdbdbd;
-  border-radius: 5px;
-  font-size: 16px;
-  outline: none;
+.login-card h1{
+
+color:#910f84;
+
+margin-bottom:10px;
+
 }
 
-.login input:focus {
-  border-color: #1976d2;
+.login-card p{
+
+margin-bottom:25px;
+
+color:#555;
+
 }
 
-/* Show Password Button */
-.show-btn {
-  width: 100%;
-  padding: 10px;
-  background: #546e7a;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 15px;
-  cursor: pointer;
+.login-card form{
+
+display:flex;
+
+flex-direction:column;
+
+gap:18px;
+
 }
 
-.show-btn:hover {
-  background: #455a64;
+.login-card input{
+
+padding:13px;
+
+border-radius:8px;
+
+border:1px solid #ccc;
+
+font-size:15px;
+
 }
 
-/* Login Button */
-.login-btn {
-  width: 100%;
-  padding: 12px;
-  background: #1976d2;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 17px;
-  cursor: pointer;
+.show-password{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+font-size:15px;
+
 }
 
-.login-btn:hover {
-  background: #1565c0;
+.login-card button{
+
+padding:13px;
+
+background:#910f77;
+
+color:white;
+
+border:none;
+
+border-radius:8px;
+
+font-size:17px;
+
+cursor:pointer;
+
+transition:.3s;
+
 }
 
-/* Disabled Button */
-button:disabled {
-  width: 100%;
-  padding: 12px;
-  background: gray;
-  color: white;
-  border: none;
-  border-radius: 5px;
+.login-card button:hover{
+
+background:#eb25d1;
+
 }
 
-/* Message */
-.message {
-  margin-top: 15px;
-  color: red;
-  font-weight: bold;
-}
+.login-card a{
 
-/* Logout Button */
-.logout-btn {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background: crimson;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
+display:block;
 
-.logout-btn:hover {
-  background: darkred;
-}
+margin-top:20px;
 
-/* Dashboard Layout */
-.body {
-  display: flex;
-}
+text-decoration:none;
 
-.main-content {
-  flex: 1;
-  padding: 20px;
-  background: #f4f6f9;
-  min-height: 100vh;
-}
+font-weight:bold;
 
-/* Responsive */
-@media (max-width: 768px) {
-  .login {
-    width: 90%;
-    margin: 40px auto;
-  }
+color:#910f8b;
 
-  .body {
-    flex-direction: column;
-  }
 }

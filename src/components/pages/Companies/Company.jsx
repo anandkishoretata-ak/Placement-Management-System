@@ -1,66 +1,84 @@
-import CompanyTable from "./CompanyTable";
+import "./Company.css";
 
 function Company() {
 
     const companies = [
+
         {
-            id: 1,
-            companyName: "Google",
-            ctc: "20 LPA",
-            placedStudents: 2
+            id:1,
+            name:"TCS",
+            role:"Software Engineer",
+            package:"7 LPA"
         },
+
         {
-            id: 2,
-            companyName: "Microsoft",
-            ctc: "18 LPA",
-            placedStudents: 4
+            id:2,
+            name:"Infosys",
+            role:"System Engineer",
+            package:"6 LPA"
         },
+
         {
-            id: 3,
-            companyName: "Amazon",
-            ctc: "22 LPA",
-            placedStudents: 3
+            id:3,
+            name:"Accenture",
+            role:"ASE",
+            package:"5 LPA"
         },
+
         {
-            id: 4,
-            companyName: "TCS",
-            ctc: "7 LPA",
-            placedStudents: 12
+            id:4,
+            name:"Capgemini",
+            role:"Analyst",
+            package:"4.5 LPA"
+        },
+
+        {
+            id:5,
+            name:"Wipro",
+            role:"Project Engineer",
+            package:"5 LPA"
         }
+
     ];
 
-    return (
-        <>
+    return(
+
+        <div className="company-page">
+
             <h1>Company Management</h1>
-            <p>Manage all recruiting companies here.</p>
 
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>S.No</th>
-                        <th>Company Name</th>
-                        <th>CTC</th>
-                        <th>Placed Students</th>
-                    </tr>
-                </thead>
+            <div className="company-grid">
 
-                <tbody>
-                    {
-                        companies.map((company, index) => (
-                            <tr key={company.id}>
-                                <td>{index + 1}</td>
-                                <td>{company.companyName}</td>
-                                <td>{company.ctc}</td>
-                                <td>{company.placedStudents}</td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
-            <CompanyTable companies={companies} />
-        </>
-        
-    );
+            {
+
+                companies.map(company=>(
+
+                    <div
+                    key={company.id}
+                    className="company-card">
+
+                        <h2>{company.name}</h2>
+
+                        <p><b>Role:</b> {company.role}</p>
+
+                        <p><b>Package:</b> {company.package}</p>
+
+                        <button>
+                            Apply
+                        </button>
+
+                    </div>
+
+                ))
+
+            }
+
+            </div>
+
+        </div>
+
+    )
+
 }
 
 export default Company;

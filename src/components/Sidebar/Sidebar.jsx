@@ -1,78 +1,80 @@
 import "./Sidebar.css";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {
   FaHome,
+  FaTachometerAlt,
   FaUserGraduate,
   FaBuilding,
-  FaBriefcase,
   FaChartBar,
   FaCog,
-  FaSignOutAlt,
+  FaSignOutAlt
 } from "react-icons/fa";
 
 function Sidebar() {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    navigate("/Login");
-  };
-
   return (
-    <aside className="sidebar">
-      <div className="logo">
+    <div className="sidebar">
+
+      <div className="sidebar-header">
         <h2>PMS</h2>
-        <p>Placement Management System</p>
+        <p>Placement Portal</p>
       </div>
 
-      <ul className="menu">
+      <ul>
+
+        <li>
+          <NavLink to="/Home">
+            <FaHome />
+            <span>Home</span>
+          </NavLink>
+        </li>
+
         <li>
           <NavLink to="/Dashboard">
-            <FaHome className="icon" />
+            <FaTachometerAlt />
             <span>Dashboard</span>
           </NavLink>
         </li>
 
         <li>
           <NavLink to="/Students">
-            <FaUserGraduate className="icon" />
+            <FaUserGraduate />
             <span>Students</span>
           </NavLink>
         </li>
 
         <li>
           <NavLink to="/Companies">
-            <FaBuilding className="icon" />
+            <FaBuilding />
             <span>Companies</span>
           </NavLink>
         </li>
 
         <li>
-          <NavLink to="/Placements">
-            <FaBriefcase className="icon" />
-            <span>Placements</span>
-          </NavLink>
-        </li>
-
-        <li>
           <NavLink to="/Reports">
-            <FaChartBar className="icon" />
+            <FaChartBar />
             <span>Reports</span>
           </NavLink>
         </li>
 
         <li>
           <NavLink to="/Settings">
-            <FaCog className="icon" />
+            <FaCog />
             <span>Settings</span>
           </NavLink>
         </li>
 
-        <li className="logout" onClick={handleLogout}>
-          <FaSignOutAlt className="icon" />
-          <span>Logout</span>
-        </li>
       </ul>
-    </aside>
+
+      <div className="logout">
+
+        <NavLink to="/Login">
+          <FaSignOutAlt />
+          <span>Logout</span>
+        </NavLink>
+
+      </div>
+
+    </div>
   );
 }
 

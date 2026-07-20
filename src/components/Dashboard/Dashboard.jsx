@@ -1,155 +1,166 @@
-import { useState,useEffect } from "react";
 import "./Dashboard.css";
-import Clock from "../Clock/Clock";
-import { Navigate, useNavigate } from "react-router-dom";
+import {
+FaUserGraduate,
+FaBuilding,
+FaBriefcase,
+FaChartLine
+} from "react-icons/fa";
 
-function Dashboard() {
-  const [name, setName] = useState("Student");
-  const [newName, setNewName] = useState("");
+function Dashboard(){
 
-  const [students, setStudents] = useState(250);
-  const [placedStudents, setPlacedStudents] = useState(35);
-  const [companies, setCompanies] = useState(35);
-  const [pendingStudents, setPendingStudents] = useState(70);
+const cards=[
 
-  const changeName = () => {
-    if (newName.trim() !== "") {
-      setName(newName);
-      setNewName("");
-    }
-  };
-  const navigate = useNavigate ()
-  useEffect(()=>{
-    const loginStatus = localStorage.getItem("isLoggedIn");
-    if(loginStatus !== "true"){
-      Navigate("/Login");
+{
+title:"Students",
+count:250,
+icon:<FaUserGraduate/>
+},
 
-    }
-  },[]);
+{
+title:"Companies",
+count:35,
+icon:<FaBuilding/>
+},
 
-  return (
-    <div className="dashboard">
-      <h1>Welcome Back 👋 {name}</h1>
-      <Clock />
+{
+title:"Placed",
+count:170,
+icon:<FaBriefcase/>
+},
 
-      <div className="name-section">
-        <input
-          type="text"
-          placeholder="Enter your name"
-          value={newName}
-          onChange={(e) => setNewName(e.target.value)}
-        />
+{
+title:"Placement %",
+count:"92%",
+icon:<FaChartLine/>
+}
 
-        <button onClick={changeName}>
-          Change Name
-        </button>
-      </div>
+];
 
-      <div className="cards">
+return(
 
-        {/* Total Students */}
-        <div className="card">
-          <h2>{students}</h2>
-          <p>Total Students</p>
+<div className="dashboard">
 
-          <div className="btn-group">
-            <button onClick={() => setStudents((prev) => prev + 1)}>+</button>
+<h1>Dashboard</h1>
 
-            <button
-              onClick={() =>
-                setStudents((prev) => (prev > 0 ? prev - 1 : 0))
-              }
-            >
-              -
-            </button>
+<div className="cards">
 
-            <button
-              className="resetBtn"
-              onClick={() => setStudents(250)}
-            >
-              Reset
-            </button>
-          </div>
-        </div>
+{
 
-        {/* Placed Students */}
-        <div className="card">
-          <h2>{placedStudents}</h2>
-          <p>Placed Students</p>
+cards.map((card,index)=>(
 
-          <div className="btn-group">
-            <button onClick={() => setPlacedStudents((prev) => prev + 1)}>+</button>
+<div
+className="card"
+key={index}
+>
 
-            <button
-              onClick={() =>
-                setPlacedStudents((prev) => (prev > 0 ? prev - 1 : 0))
-              }
-            >
-              -
-            </button>
+<div className="card-icon">
 
-            <button
-              className="resetBtn"
-              onClick={() => setPlacedStudents(35)}
-            >
-              Reset
-            </button>
-          </div>
-        </div>
+{card.icon}
 
-        {/* Companies */}
-        <div className="card">
-          <h2>{companies}</h2>
-          <p>Companies</p>
+</div>
 
-          <div className="btn-group">
-            <button onClick={() => setCompanies((prev) => prev + 1)}>+</button>
+<h2>{card.count}</h2>
 
-            <button
-              onClick={() =>
-                setCompanies((prev) => (prev > 0 ? prev - 1 : 0))
-              }
-            >
-              -
-            </button>
+<p>{card.title}</p>
 
-            <button
-              className="resetBtn"
-              onClick={() => setCompanies(35)}
-            >
-              Reset
-            </button>
-          </div>
-        </div>
+</div>
 
-        {/* Pending Students */}
-        <div className="card">
-          <h2>{pendingStudents}</h2>
-          <p>Pending Students</p>
+))
 
-          <div className="btn-group">
-            <button onClick={() => setPendingStudents((prev) => prev + 1)}>+</button>
+}
 
-            <button
-              onClick={() =>
-                setPendingStudents((prev) => (prev > 0 ? prev - 1 : 0))
-              }
-            >
-              -
-            </button>
+</div>
 
-            <button
-              className="resetBtn"
-              onClick={() => setPendingStudents(70)}
-            >
-              Reset
-            </button>
-          </div>
-        </div>
+<div className="dashboard-bottom">
 
-      </div>
-    </div>
-  );
+<div className="recent">
+
+<h2>Recent Placements</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>Company</th>
+
+<th>Package</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>Rahul</td>
+
+<td>TCS</td>
+
+<td>7 LPA</td>
+
+</tr>
+
+<tr>
+
+<td>Anjali</td>
+
+<td>Infosys</td>
+
+<td>6 LPA</td>
+
+</tr>
+
+<tr>
+
+<td>Ravi</td>
+
+<td>Accenture</td>
+
+<td>5 LPA</td>
+
+</tr>
+
+<tr>
+
+<td>Sneha</td>
+
+<td>Capgemini</td>
+
+<td>5.5 LPA</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<div className="quick-actions">
+
+<h2>Quick Actions</h2>
+
+<button>Add Student</button>
+
+<button>Add Company</button>
+
+<button>Generate Report</button>
+
+<button>View Placements</button>
+
+</div>
+
+</div>
+
+</div>
+
+)
+
 }
 
 export default Dashboard;

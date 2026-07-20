@@ -2,22 +2,32 @@ import { Outlet } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
 import Footer from "../Footer/Footer";
+import "./Layout.css";
 
 function Layout() {
   return (
-    <>
+    <div className="layout">
+
+      {/* Navbar */}
       <Navbar />
 
-      <div className="body">
+      {/* Main Body */}
+      <div className="layout-body">
+
+        {/* Sidebar */}
         <Sidebar />
 
-        <div className="main-content">
+        {/* Main Content */}
+        <main className="main-content">
           <Outlet />
-        </div>
+        </main>
+
       </div>
 
+      {/* Footer */}
       <Footer />
-    </>
+
+    </div>
   );
 }
 
