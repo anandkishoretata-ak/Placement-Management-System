@@ -1,280 +1,186 @@
+
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "./Register.css";
 import { useState, useEffect } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import api from "../../../api/api";
 
 function Register() {
   const navigate = useNavigate();
   const { id } = useParams();
 
   const [studentName, setStudentName] = useState("");
-  const [rollNo, setRollNo] = useState("");
+  const [rollno, setRollno] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
   const [branch, setBranch] = useState("");
   const [cgpa, setCgpa] = useState("");
   const [year, setYear] = useState("");
-  const [phone, setPhone] = useState("");
-
-  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   // Load student data when editing
   useEffect(() => {
-    if (!id) return;
-
-    const students =
-      JSON.parse(localStorage.getItem("students")) || [];
-
-    const student = students.find(
-      (item) => item.id === Number(id)
-    );
-
-    if (student) {
-      setStudentName(student.studentName);
-      setRollNo(student.rollNo);
-      setEmail(student.email);
-      setPassword(student.password);
-      setBranch(student.branch);
-      setCgpa(student.cgpa);
-      setYear(student.year);
-      setPhone(student.phone || "");
+    if (id) {
+      getStudent();
     }
   }, [id]);
 
-  function validate() {
-    let newErrors = {};
+  async function getStudent() {
+    try {
+      const response = await api.get(`/students/${id}`);
 
-    if (studentName.trim() === "") {
-      newErrors.studentName = "Student name is required";
+      setStudentName(response.data.studentName);
+      setRollno(response.data.rollno);
+      setEmail(response.data.email);
+      setPhone(response.data.phone);
+      setBranch(response.data.branch);
+      setCgpa(response.data.cgpa);
+      setYear(response.data.year);
+    } catch (error) {
+      console.log(error);
+      alert("Failed to load student details");
     }
-
-    if (rollNo.trim() === "") {
-      newErrors.rollNo = "Roll Number is required";
-    }
-
-    if (email.trim() === "") {
-      newErrors.email = "Email is required";
-    } else if (
-      !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email)
-    ) {
-      newErrors.email = "Invalid Email";
-    }
-
-    if (password.length < 6) {
-      newErrors.password =
-        "Password must be at least 6 characters";
-    }
-
-    if (phone.trim() === "") {
-      newErrors.phone = "Phone Number is required";
-    } else if (!/^[0-9]{10}$/.test(phone)) {
-      newErrors.phone =
-        "Phone Number should contain 10 digits";
-    }
-
-    if (branch.trim() === "") {
-      newErrors.branch = "Branch is required";
-    }
-
-    if (cgpa === "") {
-      newErrors.cgpa = "CGPA is required";
-    } else if (cgpa < 0 || cgpa > 10) {
-      newErrors.cgpa =
-        "CGPA should be between 0 and 10";
-    }
-
-    if (year === "") {
-      newErrors.year = "Select Year";
-    }
-
-    setErrors(newErrors);
-
-    return Object.keys(newErrors).length === 0;
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
-    if (!validate()) return;
-
-    let students =
-      JSON.parse(localStorage.getItem("students")) || [];
-
     const student = {
-      id: id ? Number(id) : Date.now(),
       studentName,
-      rollNo,
+      rollno: Number(rollno),
       email,
-      password,
       phone,
       branch,
-      cgpa,
-      year,
+      cgpa: Number(cgpa),
+      year: Number(year),
     };
 
-    if (id) {
-      students = students.map((item) =>
-        item.id === Number(id)
-          ? student
-          : item
-      );
+    try {
+      setLoading(true);
 
-      alert("Student Updated Successfully");
-    } else {
-      students.push(student);
+      if (id) {
+        const response = await api.put(`/students/${id}`, student);
+        alert(response.data.message || "Student Updated Successfully");
+      } else {
+        const response = await api.post("/students", student);
+        alert(response.data.message || "Student Registered Successfully");
+      }
 
-      alert("Student Registered Successfully");
+      navigate("/Student");
+    } catch (error) {
+      console.log(error);
+      alert(error.response?.data?.message || "Something went wrong");
+    } finally {
+      setLoading(false);
     }
-
-    localStorage.setItem(
-      "students",
-      JSON.stringify(students)
-    );
-
-    navigate("/Students");
   }
 
   function handleReset() {
     setStudentName("");
-    setRollNo("");
+    setRollno("");
     setEmail("");
-    setPassword("");
     setPhone("");
     setBranch("");
     setCgpa("");
     setYear("");
-    setErrors({});
   }
 
   return (
-    <div className="register-container">
+    <div className="register">
+      <h1>{id ? "Edit Student" : "Student Registration"}</h1>
 
-      <div className="register-card">
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Student Name"
+          value={studentName}
+          onChange={(e) => setStudentName(e.target.value)}
+          required
+        />
 
-        <h1>
-          {id
-            ? "Edit Student"
-            : "Student Registration"}
-        </h1>
+        <input
+          type="number"
+          placeholder="Roll Number"
+          value={rollno}
+          onChange={(e) => setRollno(e.target.value)}
+          required
+        />
 
-        <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
 
-          <input
-            type="text"
-            placeholder="Student Name"
-            value={studentName}
-            onChange={(e) =>
-              setStudentName(e.target.value)
-            }
-          />
-          <span>{errors.studentName}</span>
+        <input
+          type="text"
+          placeholder="Phone Number"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          required
+        />
 
-          <input
-            type="text"
-            placeholder="Roll Number"
-            value={rollNo}
-            onChange={(e) =>
-              setRollNo(e.target.value)
-            }
-          />
-          <span>{errors.rollNo}</span>
+        <select
+          value={branch}
+          onChange={(e) => setBranch(e.target.value)}
+          required
+        >
+          <option value="">Select Branch</option>
+          <option value="CSE">CSE</option>
+          <option value="CSE-AI">CSE-AI</option>
+          <option value="CSE-DS">CSE-DS</option>
+          <option value="CSE-CS">CSE-CS</option>
+          <option value="ECE">ECE</option>
+        </select>
 
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) =>
-              setEmail(e.target.value)
-            }
-          />
-          <span>{errors.email}</span>
+        <input
+          type="number"
+          placeholder="CGPA"
+          value={cgpa}
+          onChange={(e) => setCgpa(e.target.value)}
+          step="0.01"
+          min="0"
+          max="10"
+          required
+        />
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) =>
-              setPassword(e.target.value)
-            }
-          />
-          <span>{errors.password}</span>
+        <select
+          value={year}
+          onChange={(e) => setYear(e.target.value)}
+          required
+        >
+          <option value="">Select Year</option>
+          <option value="1">1st Year</option>
+          <option value="2">2nd Year</option>
+          <option value="3">3rd Year</option>
+          <option value="4">4th Year</option>
+        </select>
 
-          <input
-            type="text"
-            placeholder="Phone Number"
-            value={phone}
-            onChange={(e) =>
-              setPhone(e.target.value)
-            }
-          />
-          <span>{errors.phone}</span>
+        <div className="buttons">
+          <button type="submit" disabled={loading}>
+            {loading
+              ? id
+                ? "Updating..."
+                : "Registering..."
+              : id
+              ? "Update Student"
+              : "Register"}
+          </button>
 
-          <input
-            type="text"
-            placeholder="Branch"
-            value={branch}
-            onChange={(e) =>
-              setBranch(e.target.value)
-            }
-          />
-          <span>{errors.branch}</span>
-
-          <input
-            type="number"
-            placeholder="CGPA"
-            min="0"
-            max="10"
-            step="0.01"
-            value={cgpa}
-            onChange={(e) =>
-              setCgpa(e.target.value)
-            }
-          />
-          <span>{errors.cgpa}</span>
-
-          <select
-            value={year}
-            onChange={(e) =>
-              setYear(e.target.value)
-            }
+          <button
+            type="button"
+            onClick={handleReset}
+            disabled={loading}
           >
-            <option value="">
-              Select Year
-            </option>
-            <option>1st Year</option>
-            <option>2nd Year</option>
-            <option>3rd Year</option>
-            <option>4th Year</option>
-          </select>
+            Reset
+          </button>
+        </div>
+      </form>
 
-          <span>{errors.year}</span>
-
-          <div className="btn-group">
-
-            <button type="submit">
-              {id
-                ? "Update Student"
-                : "Register"}
-            </button>
-
-            <button
-              type="button"
-              onClick={handleReset}
-            >
-              Reset
-            </button>
-
-          </div>
-
-          <div className="login-link">
-            <Link to="/Login">
-              Back to Login
-            </Link>
-          </div>
-
-        </form>
-
-      </div>
-
+      <Link to="/Login">
+        Already have an account? Login
+      </Link>
     </div>
   );
 }
