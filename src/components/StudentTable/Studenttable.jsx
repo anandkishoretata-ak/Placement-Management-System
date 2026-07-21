@@ -28,11 +28,11 @@ function StudentTable({ students, deleteStudent }) {
 
                 <tbody>
 
-                    {students.map((student, _id) => (
+                    {students.map((student, index) => (
 
                         <tr key={student._id}>
 
-                            <td>{student._id + 1}</td>
+                            <td>{index + 1}</td>
                             <td>{student.studentName}</td>
                             <td>{student.rollNo}</td>
                             <td>{student.email}</td>
