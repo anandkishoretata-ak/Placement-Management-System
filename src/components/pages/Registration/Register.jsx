@@ -1,53 +1,30 @@
-
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import api from "../../../api/api";
 
 function Register() {
   const navigate = useNavigate();
-  const { id } = useParams();
 
   const [studentName, setStudentName] = useState("");
-  const [rollno, setRollno] = useState("");
+  const [rollNo, setRollNo] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [branch, setBranch] = useState("");
   const [cgpa, setCgpa] = useState("");
   const [year, setYear] = useState("");
+
   const [loading, setLoading] = useState(false);
-
-  // Load student data when editing
-  useEffect(() => {
-    if (id) {
-      getStudent();
-    }
-  }, [id]);
-
-  async function getStudent() {
-    try {
-      const response = await api.get(`/students/${id}`);
-
-      setStudentName(response.data.studentName);
-      setRollno(response.data.rollno);
-      setEmail(response.data.email);
-      setPhone(response.data.phone);
-      setBranch(response.data.branch);
-      setCgpa(response.data.cgpa);
-      setYear(response.data.year);
-    } catch (error) {
-      console.log(error);
-      alert("Failed to load student details");
-    }
-  }
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     const student = {
       studentName,
-      rollno: Number(rollno),
+      rollNo: Number(rollNo),
       email,
+      password,
       phone,
       branch,
       cgpa: Number(cgpa),
@@ -57,18 +34,15 @@ function Register() {
     try {
       setLoading(true);
 
-      if (id) {
-        const response = await api.put(`/students/${id}`, student);
-        alert(response.data.message || "Student Updated Successfully");
-      } else {
-        const response = await api.post("/students", student);
-        alert(response.data.message || "Student Registered Successfully");
-      }
+      const response = await api.post("/students", student);
 
-      navigate("/Student");
+      alert(response.data.message);
+
+      navigate("/Students");
     } catch (error) {
       console.log(error);
-      alert(error.response?.data?.message || "Something went wrong");
+
+      alert(error.response?.data?.message || "Registration Failed");
     } finally {
       setLoading(false);
     }
@@ -76,8 +50,9 @@ function Register() {
 
   function handleReset() {
     setStudentName("");
-    setRollno("");
+    setRollNo("");
     setEmail("");
+    setPassword("");
     setPhone("");
     setBranch("");
     setCgpa("");
@@ -86,9 +61,11 @@ function Register() {
 
   return (
     <div className="register">
-      <h1>{id ? "Edit Student" : "Student Registration"}</h1>
+
+      <h1>Student Registration</h1>
 
       <form onSubmit={handleSubmit}>
+
         <input
           type="text"
           placeholder="Student Name"
@@ -100,8 +77,8 @@ function Register() {
         <input
           type="number"
           placeholder="Roll Number"
-          value={rollno}
-          onChange={(e) => setRollno(e.target.value)}
+          value={rollNo}
+          onChange={(e) => setRollNo(e.target.value)}
           required
         />
 
@@ -110,6 +87,14 @@ function Register() {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
 
@@ -128,10 +113,14 @@ function Register() {
         >
           <option value="">Select Branch</option>
           <option value="CSE">CSE</option>
+          <option value="CSM">CSM</option>
+          <option value="CIVIL">CIVIL</option>
+          <option value="ECE">ECE</option>
+          <option value="EEE">EEE</option>
+          <option value="IT">IT</option>
           <option value="CSE-AI">CSE-AI</option>
           <option value="CSE-DS">CSE-DS</option>
           <option value="CSE-CS">CSE-CS</option>
-          <option value="ECE">ECE</option>
         </select>
 
         <input
@@ -158,29 +147,29 @@ function Register() {
         </select>
 
         <div className="buttons">
-          <button type="submit" disabled={loading}>
-            {loading
-              ? id
-                ? "Updating..."
-                : "Registering..."
-              : id
-              ? "Update Student"
-              : "Register"}
+
+          <button
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? "Registering..." : "Register"}
           </button>
 
           <button
             type="button"
             onClick={handleReset}
-            disabled={loading}
           >
             Reset
           </button>
+
         </div>
+
       </form>
 
       <Link to="/Login">
         Already have an account? Login
       </Link>
+
     </div>
   );
 }

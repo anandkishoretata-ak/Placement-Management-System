@@ -26,7 +26,7 @@
 
 .details-card h1{
 
-    color:#910f84;
+    color:#0f3d91;
 
     margin-bottom:25px;
 
@@ -52,7 +52,7 @@
 
     border:none;
 
-    background:#c912d2;
+    background:#0f3d91;
 
     color:white;
 
@@ -66,6 +66,6 @@
 
 .details-card button:hover{
 
-    background:#d81dd2;
+    background:#1d4ed8;
 
 }

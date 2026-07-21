@@ -5,7 +5,7 @@
 }
 
 .dashboard h1{
-    color:#b30e8a;
+    color:#0f3d91;
     margin-bottom:30px;
 }
 
@@ -31,13 +31,13 @@
 
 .card-icon{
     font-size:45px;
-    color:#910f91;
+    color:#0f3d91;
     margin-bottom:15px;
 }
 
 .card h2{
     font-size:38px;
-    color:#910f7b;
+    color:#0f3d91;
 }
 
 .card p{
@@ -65,7 +65,7 @@
 }
 
 .recent th{
-    background:#910f79;
+    background:#0f3d91;
     color:white;
     padding:12px;
 }
@@ -83,7 +83,7 @@
 }
 
 .quick-actions button{
-    background:#8f0f91;
+    background:#0f3d91;
     color:white;
     border:none;
     padding:14px;
@@ -92,7 +92,7 @@
 }
 
 .quick-actions button:hover{
-    background:#e525eb;
+    background:#2563eb;
 }
 
 @media(max-width:900px){

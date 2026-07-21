@@ -8,7 +8,7 @@ return(
 
 <p>
 
-© 2026 Placement Management System | Developed by Ak
+© 2026 Placement Management System | Developed by Mastan Shareef Shaik
 
 </p>
 

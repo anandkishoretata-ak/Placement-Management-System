@@ -16,6 +16,7 @@ import Reports from "./components/pages/Reports/Reports";
 import Settings from "./components/pages/Settings/Settings";
 import NotFound from "./components/pages/NotFound/NotFound";
 
+
 function App() {
   return (
     <Routes>

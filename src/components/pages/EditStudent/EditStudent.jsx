@@ -1,159 +1,183 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import api from "../../../api/api";
 import "./EditStudent.css";
 
 function EditStudent() {
-
-  const { id } = useParams();
   const navigate = useNavigate();
+  const { id } = useParams();
 
-  const [studentName, setStudentName] = useState("");
-  const [rollNo, setRollNo] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [branch, setBranch] = useState("");
-  const [cgpa, setCgpa] = useState("");
-  const [year, setYear] = useState("");
+  const [student, setStudent] = useState({
+    studentName: "",
+    rollNo: "",
+    email: "",
+    password: "",
+    phone: "",
+    branch: "",
+    cgpa: "",
+    year: "",
+  });
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    fetchStudent();
+  }, []);
 
-    const students =
-      JSON.parse(localStorage.getItem("students")) || [];
+  async function fetchStudent() {
+    try {
+      const response = await api.get(`/students/${id}`);
 
-    const student = students.find(
-      (item) => item.id === Number(id)
-    );
-
-    if (student) {
-      setStudentName(student.studentName);
-      setRollNo(student.rollNo);
-      setEmail(student.email);
-      setPassword(student.password);
-      setBranch(student.branch);
-      setCgpa(student.cgpa);
-      setYear(student.year);
+      setStudent(response.data.student);
+    } catch (error) {
+      console.log(error);
+      alert("Student not found");
+      navigate("/Students");
     }
+  }
 
-  }, [id]);
+  function handleChange(e) {
+    const { name, value } = e.target;
 
-  function updateStudent(e) {
+    setStudent((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
 
+  async function handleUpdate(e) {
     e.preventDefault();
 
-    let students =
-      JSON.parse(localStorage.getItem("students")) || [];
+    setLoading(true);
 
-    students = students.map((student) =>
-      student.id === Number(id)
-        ? {
-            ...student,
-            studentName,
-            rollNo,
-            email,
-            password,
-            branch,
-            cgpa,
-            year,
-          }
-        : student
-    );
+    try {
+      const response = await api.put(`/students/${id}`, student);
 
-    localStorage.setItem(
-      "students",
-      JSON.stringify(students)
-    );
+      alert(response.data.message);
 
-    alert("Student Updated Successfully");
+      navigate("/Students");
+    } catch (error) {
+      console.log(error);
 
-    navigate("/Students");
+      alert(error.response?.data?.message || "Update Failed");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
+    <div className="register">
 
-    <div className="edit-container">
+      <h1>Edit Student</h1>
 
-      <div className="edit-card">
+      <form onSubmit={handleUpdate}>
 
-        <h1>Edit Student</h1>
+        <input
+          type="text"
+          name="studentName"
+          placeholder="Student Name"
+          value={student.studentName}
+          onChange={handleChange}
+          required
+        />
 
-        <form onSubmit={updateStudent}>
+        <input
+          type="number"
+          name="rollNo"
+          placeholder="Roll Number"
+          value={student.rollNo}
+          onChange={handleChange}
+          required
+        />
 
-          <input
-            type="text"
-            value={studentName}
-            onChange={(e) =>
-              setStudentName(e.target.value)
-            }
-            placeholder="Student Name"
-          />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={student.email}
+          onChange={handleChange}
+          required
+        />
 
-          <input
-            type="text"
-            value={rollNo}
-            onChange={(e) =>
-              setRollNo(e.target.value)
-            }
-            placeholder="Roll Number"
-          />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={student.password}
+          onChange={handleChange}
+          required
+        />
 
-          <input
-            type="email"
-            value={email}
-            onChange={(e) =>
-              setEmail(e.target.value)
-            }
-            placeholder="Email"
-          />
+        <input
+          type="text"
+          name="phone"
+          placeholder="Phone Number"
+          value={student.phone}
+          onChange={handleChange}
+          required
+        />
 
-          <input
-            type="password"
-            value={password}
-            onChange={(e) =>
-              setPassword(e.target.value)
-            }
-            placeholder="Password"
-          />
+        <select
+          name="branch"
+          value={student.branch}
+          onChange={handleChange}
+          required
+        >
+          <option value="">Select Branch</option>
+          <option value="CSE">CSE</option>
+          <option value="CSM">CSM</option>
+          <option value="CIVIL">CIVIL</option>
+          <option value="ECE">ECE</option>
+          <option value="EEE">EEE</option>
+          <option value="IT">IT</option>
+          <option value="CSE-AI">CSE-AI</option>
+          <option value="CSE-DS">CSE-DS</option>
+          <option value="CSE-CS">CSE-CS</option>
+        </select>
 
-          <input
-            type="text"
-            value={branch}
-            onChange={(e) =>
-              setBranch(e.target.value)
-            }
-            placeholder="Branch"
-          />
+        <input
+          type="number"
+          name="cgpa"
+          placeholder="CGPA"
+          value={student.cgpa}
+          onChange={handleChange}
+          step="0.01"
+          min="0"
+          max="10"
+          required
+        />
 
-          <input
-            type="number"
-            value={cgpa}
-            onChange={(e) =>
-              setCgpa(e.target.value)
-            }
-            placeholder="CGPA"
-          />
+        <select
+          name="year"
+          value={student.year}
+          onChange={handleChange}
+          required
+        >
+          <option value="">Select Year</option>
+          <option value="1">1st Year</option>
+          <option value="2">2nd Year</option>
+          <option value="3">3rd Year</option>
+          <option value="4">4th Year</option>
+        </select>
 
-          <select
-            value={year}
-            onChange={(e) =>
-              setYear(e.target.value)
-            }
-          >
-            <option>1st Year</option>
-            <option>2nd Year</option>
-            <option>3rd Year</option>
-            <option>4th Year</option>
-          </select>
+        <div className="buttons">
 
-          <button type="submit">
-            Update Student
+          <button type="submit" disabled={loading}>
+            {loading ? "Updating..." : "Update Student"}
           </button>
 
-        </form>
+          <button
+            type="button"
+            onClick={() => navigate("/Students")}
+          >
+            Cancel
+          </button>
 
-      </div>
+        </div>
+
+      </form>
 
     </div>
-
   );
 }
 

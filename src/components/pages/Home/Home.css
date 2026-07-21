@@ -5,7 +5,7 @@
 }
 
 .welcome-card{
-    background:linear-gradient(135deg,#c719be,#2546eb);
+    background:linear-gradient(135deg,#0f3d91,#2563eb);
     color:white;
     padding:40px;
     border-radius:15px;
@@ -43,7 +43,7 @@
 
 .icon{
     font-size:50px;
-    color:#c617b4;
+    color:#0f3d91;
     margin-bottom:15px;
 }
 
@@ -53,6 +53,6 @@
 }
 
 .home-card h1{
-    color:#d41fd1;
+    color:#0f3d91;
     font-size:40px;
 }

@@ -8,7 +8,7 @@ align-items:center;
 
 min-height:100vh;
 
-background:linear-gradient(135deg,#770f91,#d725eb);
+background:linear-gradient(135deg,#0f3d91,#2563eb);
 
 }
 
@@ -30,7 +30,7 @@ text-align:center;
 
 .login-card h1{
 
-color:#910f84;
+color:#0f3d91;
 
 margin-bottom:10px;
 
@@ -82,7 +82,7 @@ font-size:15px;
 
 padding:13px;
 
-background:#910f77;
+background:#0f3d91;
 
 color:white;
 
@@ -100,7 +100,7 @@ transition:.3s;
 
 .login-card button:hover{
 
-background:#eb25d1;
+background:#2563eb;
 
 }
 
@@ -114,6 +114,6 @@ text-decoration:none;
 
 font-weight:bold;
 
-color:#910f8b;
+color:#0f3d91;
 
 }

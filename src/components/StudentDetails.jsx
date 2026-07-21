@@ -1,52 +1,79 @@
-import { useParams, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import api from "../api/api"; 
 
 function StudentDetails() {
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-    const { id } = useParams();
+  const [student, setStudent] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-    const students =
-        JSON.parse(localStorage.getItem("students")) || [];
+  useEffect(() => {
+    fetchStudent();
+  }, []);
 
-    const student = students.find(
-        s => s.id === Number(id)
-    );
+  async function fetchStudent() {
+    try {
+      const response = await api.get(`/students/${id}`);
 
-    if (!student){
-        return <h2>Student Not Found</h2>;
+      setStudent(response.data.student);
+    } catch (error) {
+      console.log(error);
+      alert("Student not found");
+      navigate("/Students");
+    } finally {
+      setLoading(false);
     }
+  }
 
-    return(
+  if (loading) {
+    return <h2>Loading Student Details...</h2>;
+  }
 
-        <div className="details-container">
+  if (!student) {
+    return <h2>Student Not Found</h2>;
+  }
 
-            <div className="details-card">
+  return (
+    <div className="details-container">
 
-                <h1>Student Details</h1>
+      <h1>Student Details</h1>
 
-                <p><b>Name :</b> {student.studentName}</p>
+      <div className="details-card">
 
-                <p><b>Roll No :</b> {student.rollNo}</p>
+        <p><strong>Name :</strong> {student.studentName}</p>
 
-                <p><b>Email :</b> {student.email}</p>
+        <p><strong>Roll No :</strong> {student.rollNo}</p>
 
-                <p><b>Branch :</b> {student.branch}</p>
+        <p><strong>Email :</strong> {student.email}</p>
 
-                <p><b>CGPA :</b> {student.cgpa}</p>
+        <p><strong>Password :</strong> {student.password}</p>
 
-                <p><b>Year :</b> {student.year}</p>
+        <p><strong>Phone :</strong> {student.phone}</p>
 
-                <Link to="/Students">
-                    <button>
-                        Back
-                    </button>
-                </Link>
+        <p><strong>Branch :</strong> {student.branch}</p>
 
-            </div>
+        <p><strong>CGPA :</strong> {student.cgpa}</p>
 
-        </div>
+        <p><strong>Year :</strong> {student.year}</p>
 
-    )
+        <p>
+          <strong>Created At :</strong>{" "}
+          {new Date(student.createdAt).toLocaleString()}
+        </p>
 
+      </div>
+
+      <button
+        className="back-btn"
+        onClick={() => navigate("/Students")}
+      >
+        Back
+      </button>
+
+    </div>
+  );
 }
 
 export default StudentDetails;

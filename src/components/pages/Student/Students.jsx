@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import StudentTable from "../../StudentTable/StudentTable";
@@ -11,7 +10,6 @@ function Students() {
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
 
-    
     async function fetchStudents() {
 
         try {
@@ -42,7 +40,6 @@ function Students() {
 
     }, []);
 
-   
     async function deleteStudent(id) {
 
         const confirmDelete = window.confirm(
@@ -69,96 +66,47 @@ function Students() {
 
     }
 
-    const filteredStudents = students.filter((student) => {
+    async function searchStudents(keyword) {
 
-        return (
+        try {
 
-            student.studentName
-                .toLowerCase()
-                .includes(search.toLowerCase()) ||
+            if (keyword.trim() === "") {
 
-            student.rollno
-                .toString()
-                .includes(search) ||
+                fetchStudents();
+                return;
 
-            student.email
-                .toLowerCase()
-                .includes(search.toLowerCase()) ||
+            }
 
-            student.branch
-                .toLowerCase()
-                .includes(search.toLowerCase())
+            const response = await api.get(
+                `/students/search?keyword=${keyword}`
+            );
 
-        );
+            setStudents(response.data.students);
 
-    });
-    async function fetchStudent(){
-        try{
-            const response = await api.get(`/students/${id}`);
-            const student =  response.data.student;
-            setStudentName(student.studentName);
-            setEmail(student.email);
-            setBranch(student.branch);
-            setCgpa(student.cgpa);
-        }
-        catch(error){
-            console.log(error)
-        }
-        useEffect(()=>{
-            updateStudent
-        },[])
-    }
-        
-    
+        } catch (error) {
 
-    async function updateStudent(e) {
-
-    e.preventDefault();
-
-    const student = {
-        studentName,
-        rollno: Number(rollno),
-        email,
-        phone,
-        branch,
-        cgpa: Number(cgpa),
-        year: Number(year),
-    };
-
-    try {
-
-        if (id) {
-
-            const response = await api.put(`/students/${id}`, student);
-
-            alert(response.data.message);
-
-        } else {
-
-            const response = await api.post("/students", student);
-
-            alert(response.data.message);
+            console.log(error);
 
         }
-
-        navigate("/Student");
-
-    } catch (error) {
-
-        console.log(error);
-
-        alert(error.response?.data?.message || "Something went wrong");
 
     }
 
-}
+    function handleSearch(e) {
+
+        const value = e.target.value;
+
+        setSearch(value);
+
+        searchStudents(value);
+
+    }
 
     if (loading) {
 
         return <h2>Loading Students...</h2>;
 
     }
-    
+
     return (
 
         <div className="student-page">
@@ -182,15 +130,15 @@ function Students() {
                 <input
                     type="text"
                     className="search-bar"
-                    placeholder="🔍 Search by Name, Roll No, Email, Branch"
+                    placeholder="🔍 Search Student..."
                     value={search}
-                    onChange={(e) => setSearch(e.target.value)}
+                    onChange={handleSearch}
                 />
 
             </div>
 
             <StudentTable
-                students={filteredStudents}
+                students={students}
                 deleteStudent={deleteStudent}
             />
 

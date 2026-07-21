@@ -30,7 +30,7 @@ box-shadow:0 5px 20px rgba(0,0,0,.15);
 
 text-align:center;
 
-color:#910f79;
+color:#0f3d91;
 
 margin-bottom:25px;
 
@@ -65,7 +65,7 @@ grid-column:span 2;
 
 padding:14px;
 
-background:#d618e0;
+background:#0f3d91;
 
 color:white;
 
@@ -83,6 +83,6 @@ transition:.3s;
 
 .edit-card button:hover{
 
-background:#d51dd8;
+background:#1d4ed8;
 
 }
