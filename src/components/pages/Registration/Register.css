@@ -18,7 +18,7 @@
 
 .register-card h1{
     text-align:center;
-    color:#0f3d91;
+    color:#ba12b1;
     margin-bottom:30px;
 }
 
@@ -41,7 +41,7 @@
 
 .register-card input:focus,
 .register-card select:focus{
-    border-color:#0f3d91;
+    border-color:#f20acf;
     box-shadow:0 0 5px rgba(15,61,145,.3);
 }
 
@@ -72,11 +72,11 @@
 }
 
 .btn-group button:first-child{
-    background:#0f3d91;
+    background:#cf0dc6;
 }
 
 .btn-group button:first-child:hover{
-    background:#1d4ed8;
+    background:#d81da3;
 }
 
 .btn-group button:last-child{
@@ -95,7 +95,7 @@
 
 .login-link a{
     text-decoration:none;
-    color:#0f3d91;
+    color:#e117d3;
     font-weight:600;
 }
 
