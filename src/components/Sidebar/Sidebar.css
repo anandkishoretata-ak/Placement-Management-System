@@ -9,7 +9,7 @@
   width: 250px;
   height: calc(100vh - 70px);
 
-  background: #0f3d91;
+  background: #171818;
   color: white;
 
   display: flex;
@@ -91,12 +91,12 @@
 }
 
 .sidebar ul li a:hover {
-  background: #2563eb;
+  background: #f416cf;
 }
 
 .sidebar ul li a.active {
   background: white;
-  color: #0f3d91;
+  color: #e110ad;
   font-weight: bold;
 }
 
