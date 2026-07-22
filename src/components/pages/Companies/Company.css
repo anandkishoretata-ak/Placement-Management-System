@@ -4,7 +4,7 @@
 
 .company-page h1{
     text-align:center;
-    color:#0f3d91;
+    color:#bd0fae;
     margin-bottom:30px;
 }
 
@@ -28,7 +28,7 @@
 }
 
 .company-card h2{
-    color:#0f3d91;
+    color:#ce17ac;
     margin-bottom:15px;
 }
 
@@ -39,7 +39,7 @@
 
 .company-card button{
     margin-top:15px;
-    background:#0f3d91;
+    background:#da13c3;
     color:white;
     border:none;
     padding:10px 25px;
@@ -49,5 +49,5 @@
 }
 
 .company-card button:hover{
-    background:#1d4ed8;
+    background:#f70bcc;
 }
