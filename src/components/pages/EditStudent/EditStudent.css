@@ -65,7 +65,7 @@ grid-column:span 2;
 
 padding:14px;
 
-background:#0f3d91;
+background:#d010bd;
 
 color:white;
 
@@ -83,6 +83,6 @@ transition:.3s;
 
 .edit-card button:hover{
 
-background:#1d4ed8;
+background:#d81daf;
 
 }
