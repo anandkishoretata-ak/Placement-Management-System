@@ -97,7 +97,7 @@ key={index}
 
 <tr>
 
-<td>Rahul</td>
+<td>Anand</td>
 
 <td>TCS</td>
 
@@ -107,7 +107,7 @@ key={index}
 
 <tr>
 
-<td>Anjali</td>
+<td>Dinesh</td>
 
 <td>Infosys</td>
 
@@ -117,7 +117,7 @@ key={index}
 
 <tr>
 
-<td>Ravi</td>
+<td>Ranjith</td>
 
 <td>Accenture</td>
 
@@ -127,7 +127,7 @@ key={index}
 
 <tr>
 
-<td>Sneha</td>
+<td>Sai</td>
 
 <td>Capgemini</td>
 
