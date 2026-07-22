@@ -18,7 +18,7 @@
 
 .students-header h1{
 
-    color:#0f3d91;
+    color:#c80eac;
 
     font-size:32px;
 
@@ -34,7 +34,7 @@
 
 .add-btn{
 
-    background:#0f3d91;
+    background:#da12e4;
 
     color:white;
 
@@ -56,7 +56,7 @@
 
 .add-btn:hover{
 
-    background:#174fb8;
+    background:#d012b1;
 
 }
 
@@ -92,7 +92,7 @@
 
     outline:none;
 
-    border:1px solid #0f3d91;
+    border:1px solid #d70be9;
 
 }
 
